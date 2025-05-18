@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cute Complaint Box</title>
+    <style>
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background-color: #ffecf5;
+            margin: 0;
+            padding: 0;
+            color: #d14d8b;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 30px;
+            background-color: #fff;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(255, 105, 180, 0.2);
+            text-align: center;
+        }
+        
+        h1 {
+            color: #ff69b4;
+            margin-bottom: 30px;
+            font-size: 36px;
+            text-shadow: 2px 2px 4px rgba(255, 105, 180, 0.3);
+        }
+        
+        .subtitle {
+            color: #ff93c4;
+            margin-bottom: 30px;
+            font-size: 18px;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+            text-align: left;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #ff69b4;
+            font-size: 18px;
+        }
+        
+        input, textarea, select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ffd1e3;
+            border-radius: 12px;
+            font-size: 16px;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            color: #d14d8b;
+            background-color: #fff2f8;
+            transition: border-color 0.3s;
+        }
+        
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: #ff69b4;
+            box-shadow: 0 0 10px rgba(255, 105, 180, 0.3);
+        }
+        
+        textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+        
+        button {
+            background-color: #ff69b4;
+            color: white;
+            border: none;
+            padding: 12px 40px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            box-shadow: 0 5px 15px rgba(255, 105, 180, 0.4);
+        }
+        
+        button:hover {
+            background-color: #ff4aa5;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 105, 180, 0.6);
+        }
+        
+        button:active {
+            transform: translateY(0);
+        }
+        
+        .hearts {
+            font-size: 24px;
+            margin: 20px 0;
+            color: #ff69b4;
+        }
+        
+        .image-container {
+            margin: 20px 0;
+        }
+        
+        .thank-you {
+            display: none;
+            background-color: #ffeaf4;
+            padding: 20px;
+            border-radius: 15px;
+            margin-top: 20px;
+            font-size: 18px;
+            text-align: center;
+            color: #ff69b4;
+            border: 2px dashed #ffb6d9;
+        }
+        
+        .cat-image {
+            max-width: 250px;
+            margin: 0 auto;
+            display: block;
+            border-radius: 15px;
+        }
+        
+        /* Animation for the hearts */
+        @keyframes float {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0); }
+        }
+        
+        .floating-heart {
+            display: inline-block;
+            animation: float 2s ease-in-out infinite;
+            margin: 0 5px;
+        }
+        
+        .floating-heart:nth-child(2) {
+            animation-delay: 0.5s;
+        }
+        
+        .floating-heart:nth-child(3) {
+            animation-delay: 1s;
+        }
+        
+        .rating-container {
+            display: flex;
+            flex-direction: row;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 25px;
+        }
+        
+        .rating-label {
+            display: block;
+            margin-bottom: 15px;
+            text-align: center;
+            font-weight: bold;
+            color: #ff69b4;
+            font-size: 18px;
+        }
+        
+        .rating-btn {
+            background-color: #ffd1e3;
+            border: 2px solid #ffd1e3;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 22px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .rating-btn:hover {
+            background-color: #ff93c4;
+            transform: scale(1.1);
+        }
+        
+        .rating-btn.selected {
+            background-color: #ff69b4;
+            border-color: #ff69b4;
+            color: white;
+            transform: scale(1.1);
+        }
+        
+        .footer {
+            margin-top: 30px;
+            font-size: 14px;
+            color: #ff93c4;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Cute Complaint Box</h1>
+        <div class="subtitle">What's bothering you today, sweetie? 💕</div>
+        
+        <div class="image-container">
+            <img class="cat-image" src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExZG41bGl0Y3JiYnFxcXM2ODMweWF4ZjB6bTNqYzlzdzNrdzA4d3NsMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/lkuRLPYa6PDj2SPIwJ/giphy.gif" alt="Cute cat with heart eyes">
+        </div>
+        
+        <div class="hearts">
+            <span class="floating-heart">💕</span>
+            <span class="floating-heart">💗</span>
+            <span class="floating-heart">💖</span>
+        </div>
+        
+        <form id="grievanceForm">
+            <div class="form-group">
+                <label for="name">Your Name:</label>
+                <input type="text" id="name" name="name" required placeholder="If you're not Radha, you can never be her. 🙄">
+            </div>
+            
+            <div class="form-group">
+                <label for="category">Complaint Category:</label>
+                <select id="category" name="category" required>
+                    <option value="" disabled selected>Select a category</option>
+                    <option value="missed-date">Missed a Date 📅</option>
+                    <option value="not-listening">Not Listening 👂</option>
+                    <option value="forgot-something">Forgot Something Important 🙄</option>
+                    <option value="bad-gift">Bad Gift Choice 🎁</option>
+                    <option value="attitude">Bad Attitude 😒</option>
+                    <option value="other">Other Offense 🚫</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="complaint">Complaint Details:</label>
+                <textarea id="complaint" name="complaint" required placeholder="Tell me what I did wrong..."></textarea>
+            </div>
+            
+            <div class="form-group">
+                <div class="rating-label">How serious is this offense?</div>
+                <div class="rating-container">
+                    <div class="rating-btn" data-value="1">😐</div>
+                    <div class="rating-btn" data-value="2">😕</div>
+                    <div class="rating-btn" data-value="3">😟</div>
+                    <div class="rating-btn" data-value="4">😢</div>
+                    <div class="rating-btn" data-value="5">😭</div>
+                </div>
+                <input type="hidden" id="severity" name="severity" value="">
+            </div>
+            
+            <div class="form-group">
+                <label for="resolution">Suggested Resolution:</label>
+                <textarea id="resolution" name="resolution" placeholder="How can I make it up to you?"></textarea>
+            </div>
+            
+            <button type="submit">Submit Complaint 💌</button>
+        </form>
+        
+        <div id="thankYou" class="thank-you">
+            <div class="image-container">
+                <img class="cat-image" src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExaTk2N2xwYWp3NDljZTNydGhybXZvMnl4dDQ0dTd3MjZ5M2VobHp3diZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/qFmdpUKAFZ6rMobzzu/giphy.gif" alt="Cute cat with heart eyes">
+            </div>
+            <h2>Thank You! 💖</h2>
+            <p>Your complaint has been received. I'll do better, I promise!</p>
+            <div class="hearts">
+                <span class="floating-heart">💕</span>
+                <span class="floating-heart">💗</span>
+                <span class="floating-heart">💖</span>
+            </div>
+        </div>
+        
+        <div class="footer">
+            Made with 💖 - Because I care about your feelings!
+        </div>
+    </div>
+
+    <script>
+        // Handle the emoji rating selection
+        const ratingBtns = document.querySelectorAll('.rating-btn');
+        const severityInput = document.getElementById('severity');
+        
+        ratingBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Remove selected class from all buttons
+                ratingBtns.forEach(b => b.classList.remove('selected'));
+                
+                // Add selected class to clicked button
+                btn.classList.add('selected');
+                
+                // Update hidden input value
+                severityInput.value = btn.getAttribute('data-value');
+            });
+        });
+        
+        // Form submission
+        document.getElementById('grievanceForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form data
+            const formData = new FormData(this);
+            let formValues = {};
+            
+            formData.forEach((value, key) => {
+                formValues[key] = value;
+            });
+            
+            console.log('Form submitted:', formValues);
+            
+            // Show loading state
+            const submitButton = this.querySelector('button[type="submit"]');
+            const originalButtonText = submitButton.innerHTML;
+            submitButton.innerHTML = 'Sending...';
+            submitButton.disabled = true;
+            
+            // Send the form data to our backend
+            fetch('/submit-grievance', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formValues)
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Success:', data);
+                // Show thank you message
+                document.getElementById('thankYou').style.display = 'block';
+                
+                // Scroll to thank you message
+                document.getElementById('thankYou').scrollIntoView({ behavior: 'smooth' });
+                
+                // Reset form after submission
+                setTimeout(() => {
+                    this.reset();
+                    ratingBtns.forEach(b => b.classList.remove('selected'));
+                    severityInput.value = '';
+                    submitButton.innerHTML = originalButtonText;
+                    submitButton.disabled = false;
+                }, 1000);
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+                alert('Something went wrong! Please try again.');
+                submitButton.innerHTML = originalButtonText;
+                submitButton.disabled = false;
+            });
+        });
+    </script>
+</body>
+</html>
